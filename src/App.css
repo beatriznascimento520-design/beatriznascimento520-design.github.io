@@ -1,0 +1,947 @@
+/* ============ Layout primitives ============ */
+.app {
+  position: relative;
+  overflow-x: clip;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 28px;
+}
+
+.section {
+  padding: clamp(64px, 11vw, 128px) 0;
+}
+
+.section--soft {
+  background: var(--bg-soft);
+  transition: background 0.4s var(--ease);
+}
+
+.section--compact {
+  padding: clamp(40px, 6vw, 64px) 0;
+}
+
+/* ============ Shared bits ============ */
+.eyebrow {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.75rem;
+}
+
+.section__head {
+  max-width: 760px;
+  margin-bottom: clamp(40px, 6vw, 72px);
+}
+.section__head--compact {
+  margin-bottom: 24px;
+}
+.section__title {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: clamp(1.9rem, 4vw, 2.8rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+.section__title--sm {
+  font-size: clamp(1.3rem, 2.4vw, 1.6rem);
+}
+.section__sub {
+  margin-top: 1rem;
+  color: var(--text-soft);
+  font-size: 1.05rem;
+}
+
+.tags {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 1.1rem;
+}
+.tags li {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--text-soft);
+  padding: 5px 11px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 13px 24px;
+  border-radius: 999px;
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: transform 0.25s var(--ease), background 0.25s var(--ease),
+    border-color 0.25s var(--ease), color 0.25s var(--ease);
+}
+.btn:hover {
+  transform: translateY(-2px);
+}
+.btn--primary {
+  background: var(--accent);
+  color: #fff;
+}
+.btn--primary:hover {
+  background: var(--text);
+}
+.btn--ghost {
+  border: 1px solid var(--line);
+  background: var(--surface);
+}
+.btn--ghost:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.btn--icon {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: var(--surface);
+}
+.btn--icon:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--surface);
+}
+
+/* ============ Navigation ============ */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  transition: background 0.3s var(--ease), border-color 0.3s var(--ease),
+    backdrop-filter 0.3s var(--ease);
+  border-bottom: 1px solid transparent;
+}
+.nav--scrolled {
+  background: color-mix(in srgb, var(--bg) 78%, transparent);
+  backdrop-filter: blur(14px);
+  border-bottom-color: var(--line);
+}
+.nav__inner {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 16px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav__brand {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 1.3rem;
+  letter-spacing: -0.01em;
+}
+.nav__dot {
+  color: var(--accent);
+}
+.nav__links {
+  display: flex;
+  gap: 30px;
+}
+.nav__links a {
+  font-size: 0.95rem;
+  color: var(--text-soft);
+  position: relative;
+  transition: color 0.2s var(--ease);
+}
+.nav__links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  width: 0;
+  height: 2px;
+  background: var(--accent);
+  border-radius: 2px;
+  transition: width 0.25s var(--ease);
+}
+.nav__links a:hover {
+  color: var(--text);
+}
+.nav__links a:hover::after {
+  width: 100%;
+}
+/* Language + theme controls, grouped at the right end of the bar. */
+.nav__tools {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.nav__theme,
+.nav__lang {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  display: grid;
+  place-items: center;
+  font-size: 1rem;
+  background: var(--surface);
+  transition: transform 0.3s var(--ease), border-color 0.2s var(--ease);
+}
+.nav__theme:hover {
+  transform: rotate(-20deg);
+  border-color: var(--accent);
+}
+.nav__lang:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent);
+}
+/* The hairline keeps pale flag edges (the Portuguese red, the Union Jack's
+   white) from bleeding into the button on either theme. */
+.flag {
+  display: block;
+  border-radius: 3px;
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--text) 18%, transparent);
+}
+
+/* ============ Hero ============
+   Fills the first viewport (minus the sticky nav) so nothing below the fold
+   peeks in on load. */
+.hero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: calc(100svh - 74px);
+  padding: clamp(40px, 6vw, 72px) 0;
+}
+.hero__grid {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: clamp(32px, 6vw, 64px);
+  align-items: center;
+  width: 100%;
+}
+.hero__name {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: clamp(2.8rem, 8vw, 5rem);
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  margin: 0.3rem 0 1.4rem;
+  color: var(--text);
+}
+.hero__role {
+  white-space: nowrap;
+  font-size: clamp(0.62rem, 2.3vw, 0.78rem);
+}
+/* Two stacked rows: the text buttons, then the icon links beneath them. */
+.hero__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  margin-top: 2rem;
+}
+/* Keeps "View Career" and the CV button on one line — CV sits to the right of
+   it, never wrapped underneath. */
+.hero__cta-group {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 14px;
+  flex: 0 0 auto;
+}
+.hero__socials {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Email popover — anchored under the mail icon. */
+.hero__email {
+  position: relative;
+  display: inline-flex;
+}
+.email-pop {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  white-space: nowrap;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.16);
+  animation: email-pop-in 0.18s var(--ease);
+}
+.email-pop__address {
+  font-size: 0.86rem;
+  color: var(--text);
+}
+.email-pop__copy {
+  flex: 0 0 auto;
+  padding: 5px 12px;
+  font: inherit;
+  font-size: 0.78rem;
+  color: var(--accent);
+  cursor: pointer;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: transparent;
+  transition: border-color 0.2s var(--ease), background 0.2s var(--ease);
+}
+.email-pop__copy:hover {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+}
+@keyframes email-pop-in {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #36b37e;
+  box-shadow: 0 0 0 0 rgba(54, 179, 126, 0.5);
+  animation: pulse 2.4s infinite;
+}
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(54, 179, 126, 0.5);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(54, 179, 126, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(54, 179, 126, 0);
+  }
+}
+
+/* Hero photos — two equal portraits side by side, the second dropped slightly
+   so the pair reads as staggered rather than as a rigid row. */
+.hero__photo-wrap {
+  justify-self: end;
+  display: flex;
+  align-items: flex-start;
+  gap: clamp(12px, 1.6vw, 18px);
+  width: min(400px, 100%);
+  padding-bottom: clamp(20px, 3vw, 32px);
+}
+.hero__photo {
+  flex: 1 1 0;
+  min-width: 0;
+  aspect-ratio: 4 / 5;
+  box-shadow: var(--shadow);
+}
+/* Both source files are pre-cropped to exactly 4:5, so object-fit: cover has
+   nothing left to trim and no object-position tuning is needed. Swapping in a
+   photo of a different ratio means re-cropping it, not nudging the CSS. */
+.hero__photo--accent {
+  transform: translateY(clamp(20px, 3vw, 32px));
+}
+
+/* ============ Photo component ============ */
+.photo {
+  /* Squircle, pushed well past a rounded square toward an oval. The horizontal
+     radius is maxed at 50%, so the sides are fully bowed; the vertical radius
+     is what keeps it from collapsing into a plain ellipse. */
+  border-radius: 50% 50% 50% 50% / 28% 28% 28% 28%;
+  overflow: hidden;
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+}
+.photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.photo__placeholder {
+  width: 100%;
+  height: 100%;
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+}
+.photo--tone1 .photo__placeholder {
+  background: linear-gradient(135deg, #f3e7dd, #e6d3c4);
+}
+.photo--tone2 .photo__placeholder {
+  background: linear-gradient(135deg, #f6e4e6, #e8ccd2);
+}
+.photo--tone3 .photo__placeholder {
+  background: linear-gradient(135deg, #e8e1ee, #d4cae0);
+}
+[data-theme="dark"] .photo--tone1 .photo__placeholder {
+  background: linear-gradient(135deg, #3a2f27, #2a221c);
+}
+[data-theme="dark"] .photo--tone2 .photo__placeholder {
+  background: linear-gradient(135deg, #3a2a2d, #2a1e21);
+}
+[data-theme="dark"] .photo--tone3 .photo__placeholder {
+  background: linear-gradient(135deg, #322b3a, #25202c);
+}
+
+/* ============ Career (timeline) ============ */
+.timeline {
+  list-style: none;
+  max-width: 620px;
+}
+.timeline__item {
+  position: relative;
+  padding: 4px 0 28px 28px;
+  border-left: 2px solid var(--line);
+}
+.timeline__item:last-child {
+  border-left-color: transparent;
+  padding-bottom: 0;
+}
+.timeline__dot {
+  position: absolute;
+  left: -7px;
+  top: 8px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--line);
+}
+.timeline__dot--current {
+  background: #36b37e;
+  box-shadow: 0 0 0 0 rgba(54, 179, 126, 0.5);
+  animation: pulse 2.4s infinite;
+}
+.timeline .logo-chip {
+  margin-bottom: 0.9rem;
+}
+.timeline__period {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.timeline__item[style*="--brand"] .timeline__period {
+  color: color-mix(in srgb, var(--brand) 70%, var(--text));
+}
+[data-theme="dark"] .timeline__item[style*="--brand"] .timeline__period {
+  color: color-mix(in srgb, var(--brand) 45%, #ffffff);
+}
+.timeline__role {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: 1.3rem;
+  margin-top: 0.35rem;
+}
+.timeline__company {
+  color: var(--muted);
+  font-size: 0.92rem;
+  margin-top: 0.1rem;
+}
+.timeline__detail {
+  margin-top: 0.6rem;
+  color: var(--text-soft);
+  font-size: 0.92rem;
+}
+
+/* ============ Work cards ============ */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 22px;
+}
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 28px;
+  box-shadow: var(--shadow);
+  transition: transform 0.3s var(--ease), border-color 0.3s var(--ease);
+  display: flex;
+  flex-direction: column;
+}
+.card:hover {
+  transform: translateY(-4px);
+  border-color: color-mix(in srgb, var(--accent) 40%, var(--line));
+}
+.card__period {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: 0.04em;
+}
+.card__role {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: 1.4rem;
+  margin-top: 0.4rem;
+}
+.card__company {
+  color: var(--muted);
+  font-size: 0.92rem;
+  margin-top: 0.1rem;
+}
+.card__detail {
+  margin-top: 0.9rem;
+  color: var(--text-soft);
+  flex: 1;
+}
+.card__link {
+  margin-top: 1rem;
+  align-self: flex-start;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--accent);
+}
+.card__link:hover {
+  text-decoration: underline;
+}
+
+/* Compact experience cards with company logos */
+.cards--compact {
+  gap: 16px;
+}
+.cards--three {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+/* Brand-tinted blocks: a wash of the company colour plus a colour bar on top,
+   kept light enough that body text keeps its contrast. */
+.card--brand {
+  position: relative;
+  background: color-mix(in srgb, var(--brand) 7%, var(--surface));
+  border-color: color-mix(in srgb, var(--brand) 22%, var(--line));
+}
+.card--brand::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 4px;
+  background: var(--brand);
+}
+.card--brand:hover {
+  border-color: color-mix(in srgb, var(--brand) 55%, var(--line));
+}
+.card--brand .card__period,
+.card--brand .card__more {
+  color: color-mix(in srgb, var(--brand) 72%, var(--text));
+}
+[data-theme="dark"] .card--brand {
+  background: color-mix(in srgb, var(--brand) 13%, var(--surface));
+  border-color: color-mix(in srgb, var(--brand) 30%, var(--line));
+}
+[data-theme="dark"] .card--brand .card__period,
+[data-theme="dark"] .card--brand .card__more {
+  color: color-mix(in srgb, var(--brand) 45%, #ffffff);
+}
+.card--compact {
+  padding: 0;
+  overflow: hidden;
+}
+.card__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  height: 100%;
+  padding: 22px 22px 20px;
+  color: inherit;
+}
+.card--compact .card__period {
+  margin-top: 1rem;
+}
+.card--compact .card__role {
+  font-size: 1.05rem;
+  margin-top: 0.35rem;
+  line-height: 1.35;
+}
+.card--compact .card__detail {
+  margin-top: 0.6rem;
+  font-size: 0.9rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+/* Pinned to the bottom so cards with differing body lengths still line up. */
+.card__more {
+  margin-top: auto;
+  padding-top: 1rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--accent);
+}
+.card:hover .card__more {
+  text-decoration: underline;
+}
+/* ============ Certifications strip ============
+   Lighter than the degree cards above it — a credential, not a qualification. */
+.certs {
+  margin-top: clamp(28px, 4vw, 40px);
+  padding-top: clamp(24px, 3vw, 32px);
+  border-top: 1px solid var(--line);
+}
+.certs__title {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 16px;
+}
+.certs__list {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.certs__item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 20px 10px 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+}
+/* Cambridge is a wide (~2.3:1) wordmark, so it needs the extra height to read. */
+.certs .logo-chip {
+  height: 52px;
+  max-width: 180px;
+  padding: 7px 13px;
+  border-radius: 16px;
+}
+.certs .logo-chip__img {
+  max-width: 154px;
+}
+.certs__body {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3;
+}
+.certs__body strong {
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+.certs__issuer {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+/* ============ Logo chip ============
+   Logos vary wildly in aspect ratio (tall shields, wide wordmarks), so the
+   chip fixes the height and lets width flex. A white plate keeps dark-ink
+   wordmarks legible in dark mode. */
+.logo-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  min-width: 40px;
+  max-width: 150px;
+  padding: 6px 10px;
+  border-radius: 14px;
+  background: #fff;
+  border: 1px solid var(--line);
+  overflow: hidden;
+}
+.logo-chip__img {
+  height: 100%;
+  width: auto;
+  max-width: 130px;
+  object-fit: contain;
+}
+.logo-chip--sm {
+  height: 32px;
+  min-width: 32px;
+  max-width: 92px;
+  padding: 5px 8px;
+  border-radius: 11px;
+}
+.logo-chip--sm .logo-chip__img {
+  max-width: 76px;
+}
+.logo-chip--lg {
+  height: 56px;
+  max-width: 200px;
+  padding: 8px 14px;
+  border-radius: 18px;
+}
+.logo-chip--lg .logo-chip__img {
+  max-width: 172px;
+}
+.logo-chip__fallback {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  font-weight: 600;
+  color: #2a1f1d;
+}
+
+/* ============ Experience carousel ============ */
+.carousel__head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  max-width: none;
+}
+.carousel__nav {
+  display: flex;
+  gap: 10px;
+  flex: 0 0 auto;
+}
+.carousel__arrow {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--text-soft);
+  transition: border-color 0.2s var(--ease), color 0.2s var(--ease),
+    opacity 0.2s var(--ease);
+}
+.carousel__arrow:hover:not(:disabled) {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.carousel__arrow:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.carousel__track {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding: 4px 0;
+  scrollbar-width: none;
+}
+.carousel__track::-webkit-scrollbar {
+  display: none;
+}
+/* Exactly three cards visible; the rest live off-track. */
+.carousel__track .card {
+  flex: 0 0 calc((100% - 32px) / 3);
+  scroll-snap-align: start;
+}
+
+/* ============ Experience detail page ============ */
+/* The back link and logo are both inline-level by default, so they'd share a
+   line and collide — force each onto its own row. */
+.detail__back {
+  display: block;
+  width: fit-content;
+  margin-bottom: 2rem;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--muted);
+}
+.detail__back:hover {
+  color: var(--accent);
+}
+.detail .logo-chip {
+  display: flex;
+  width: fit-content;
+  margin-bottom: 1.6rem;
+}
+
+/* Carry the company colour over from the card that was clicked. */
+.detail--brand {
+  border-top: 4px solid var(--brand);
+  background: color-mix(in srgb, var(--brand) 5%, var(--bg));
+}
+.detail--brand .eyebrow,
+.detail--brand .card__link {
+  color: color-mix(in srgb, var(--brand) 72%, var(--text));
+}
+.detail--brand .logo-chip {
+  border-color: color-mix(in srgb, var(--brand) 35%, var(--line));
+}
+[data-theme="dark"] .detail--brand {
+  background: color-mix(in srgb, var(--brand) 10%, var(--bg));
+}
+[data-theme="dark"] .detail--brand .eyebrow,
+[data-theme="dark"] .detail--brand .card__link {
+  color: color-mix(in srgb, var(--brand) 45%, #ffffff);
+}
+.detail__role {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: clamp(1.7rem, 3.6vw, 2.4rem);
+  line-height: 1.15;
+  margin-top: 0.5rem;
+}
+.detail__company {
+  color: var(--muted);
+  margin-top: 0.4rem;
+}
+.detail__text {
+  margin-top: 1.5rem;
+  color: var(--text-soft);
+  font-size: 1.05rem;
+  max-width: 62ch;
+}
+.detail .tags {
+  margin-top: 1.6rem;
+}
+.detail__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 1.8rem;
+}
+.detail--brand .detail__links .btn:hover {
+  border-color: var(--brand);
+  color: color-mix(in srgb, var(--brand) 72%, var(--text));
+}
+[data-theme="dark"] .detail--brand .detail__links .btn:hover {
+  color: color-mix(in srgb, var(--brand) 45%, #ffffff);
+}
+
+/* ============ Footer ============ */
+.footer {
+  padding: clamp(56px, 8vw, 88px) 0 40px;
+  border-top: 1px solid var(--line);
+  background: var(--bg);
+  transition: background 0.4s var(--ease);
+}
+.footer__cta {
+  text-align: center;
+  max-width: 560px;
+  margin: 0 auto;
+}
+.footer__sub {
+  color: var(--text-soft);
+}
+.footer__copy {
+  margin-top: clamp(32px, 5vw, 56px);
+  text-align: center;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+/* ============ Reveal-on-scroll ============ */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ============ On-load entrance (clean first paint) ============ */
+.load {
+  opacity: 0;
+  transform: translateY(16px);
+  animation: load-in 0.8s var(--ease) forwards;
+}
+.load-1 { animation-delay: 0.05s; }
+.load-2 { animation-delay: 0.14s; }
+.load-3 { animation-delay: 0.24s; }
+.load-4 { animation-delay: 0.34s; }
+.load-5 { animation-delay: 0.44s; }
+.load-6 { animation-delay: 0.54s; }
+@keyframes load-in {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ============ Responsive ============ */
+@media (max-width: 860px) {
+  .hero__grid {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .hero__text {
+    order: 2;
+  }
+  .hero__photo-wrap {
+    order: 1;
+    justify-self: center;
+    width: min(340px, 100%);
+  }
+  .hero__actions {
+    justify-content: center;
+  }
+  .timeline__item {
+    text-align: left;
+  }
+  .cards--three {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .carousel__track .card {
+    flex: 0 0 calc((100% - 16px) / 2);
+  }
+  .carousel__head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+}
+
+@media (max-width: 600px) {
+  .nav__links {
+    gap: 18px;
+  }
+  .nav__links a {
+    font-size: 0.86rem;
+  }
+  .container {
+    padding: 0 20px;
+  }
+  .hero__actions .btn--primary,
+  .hero__actions .btn--ghost {
+    padding: 11px 18px;
+    font-size: 0.88rem;
+  }
+  .hero__actions {
+    gap: 10px;
+  }
+  .cards--three {
+    grid-template-columns: 1fr;
+  }
+  .carousel__track .card {
+    flex: 0 0 88%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .load {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+}

@@ -2,6 +2,7 @@ import { HashRouter, Route, Routes } from "react-router-dom";
 import Nav from "./components/Nav";
 import Home from "./components/Home";
 import ExperienceDetail from "./components/ExperienceDetail";
+import CareerDetail from "./components/CareerDetail";
 import Footer from "./components/Footer";
 import LanguageProvider from "./i18n/LanguageProvider";
 import { useTheme } from "./hooks/useTheme";
@@ -20,6 +21,7 @@ export default function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/experience/:slug" element={<ExperienceDetail />} />
+              <Route path="/career/:slug" element={<CareerDetail />} />
             </Routes>
           </main>
 

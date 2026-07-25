@@ -74,4 +74,25 @@ export const EXPERIENCE = [
       { en: "Preventive Care", pt: "Prevenção" },
     ],
   },
+  {
+    slug: "rigo-cheneau-research",
+    // Reuses ESSLisboa's wine — the project was carried out there. Already
+    // contrast-validated for use as a --brand elsewhere on the site.
+    brand: "#8e1c30",
+    period: "2026",
+    role: { en: "Research Project", pt: "Projeto de Investigação" },
+    company: "Escola Superior de Saúde de Lisboa",
+    logo: "/logos/esslisboa.png",
+    detail: {
+      en: "Final research project on the effects of the Rigo-Chêneau brace on gait biomechanics and plantar pressure distribution. Collected and analysed biomechanical gait and plantar-pressure data using quantitative assessment methods and statistical analysis, and designed and built a web application to visualise and compare pre- and post-bracing data against standardised gait reference values.",
+      pt: "Projeto de investigação final sobre os efeitos da ortótese Rigo-Chêneau na biomecânica da marcha e na distribuição das pressões plantares. Recolha e análise de dados biomecânicos da marcha e de pressões plantares através de métodos de avaliação quantitativa e análise estatística, e conceção e desenvolvimento de uma aplicação web para visualizar e comparar dados pré e pós-ortótese face a valores de referência normalizados da marcha.",
+    },
+    tags: [
+      { en: "Research", pt: "Investigação" },
+      { en: "Gait Analysis", pt: "Análise da Marcha" },
+      { en: "Plantar Pressure", pt: "Pressões Plantares" },
+      { en: "Web App", pt: "Aplicação Web" },
+      { en: "Data Analysis", pt: "Análise de Dados" },
+    ],
+  },
 ];

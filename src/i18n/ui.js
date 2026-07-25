@@ -43,16 +43,18 @@ export const UI = {
 
   "work.eyebrow": { en: "Experiences", pt: "Experiências" },
   "work.title": {
-    en: "Internships & Volunteering",
-    pt: "Estágios e Voluntariado",
+    en: "Volunteering, Internships & Research",
+    pt: "Voluntariado, Estágios e Investigação",
   },
   "work.prev": { en: "Previous experiences", pt: "Experiências anteriores" },
   "work.next": { en: "More experiences", pt: "Mais experiências" },
   "work.readMore": { en: "Read more →", pt: "Saber mais →" },
 
   "career.eyebrow": { en: "Career", pt: "Carreira" },
+  "career.viewDetail": { en: "View details →", pt: "Ver detalhes →" },
 
   "detail.back": { en: "← Back to experiences", pt: "← Voltar às experiências" },
+  "detail.backCareer": { en: "← Back to career", pt: "← Voltar à carreira" },
   "detail.notFound": {
     en: "That experience couldn't be found.",
     pt: "Não foi possível encontrar essa experiência.",

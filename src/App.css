@@ -436,6 +436,31 @@
 .timeline .logo-chip {
   margin-bottom: 0.9rem;
 }
+/* Clickable entries stay inline in the timeline; the "View details" cue and a
+   hover underline signal they're links, without a boxed card. */
+.timeline__link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+.timeline__more {
+  display: inline-block;
+  margin-top: 0.75rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: color-mix(in srgb, var(--brand) 72%, var(--text));
+}
+[data-theme="dark"] .timeline__more {
+  color: color-mix(in srgb, var(--brand) 45%, #ffffff);
+}
+.timeline__link:hover .timeline__more {
+  text-decoration: underline;
+}
+.timeline__link:hover .timeline__role {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
 .timeline__period {
   display: block;
   font-size: 0.78rem;
